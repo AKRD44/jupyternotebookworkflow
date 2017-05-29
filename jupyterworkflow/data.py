@@ -16,7 +16,8 @@ def get_data(filename=my_file,url=URL):
 	#data=pd.read_csv(my_file, index_col="Date", parse_dates=True) #for time series, make sure that the index is properly set
 	data=pd.read_csv(my_file, index_col="Date") #for time series, make sure that the index is properly set
 	try:
-		data.index=pd.to_datetime(data.index,format="%m/%d/%Y %H:%M:%S %p")
+		data.index=pd.to_datetime(data.index,format="%m/%d/%Y %I:%M:%S %p")
+		#data.index=pd.to_datetime(data.index,format="%m/%d/%Y %I:%M:%S %p")  #H assumes 24 hour format. I assumes 12 hour format (AM first then PM) this is the setup we have.
 	except TypeError:
 		data.index=pd.to_datetime(data.index)
 	data.columns=["West","East"] # so as to shorten the legend
