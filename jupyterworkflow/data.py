@@ -13,7 +13,12 @@ def get_data(filename=my_file,url=URL):
 	if not os.path.exists(filename):
 		print("downloading data")
 		urlretrieve(url,filename)
-	data=pd.read_csv(my_file, index_col="Date", parse_dates=True) #for time series, make sure that the index is properly set
+	#data=pd.read_csv(my_file, index_col="Date", parse_dates=True) #for time series, make sure that the index is properly set
+	data=pd.read_csv(my_file, index_col="Date") #for time series, make sure that the index is properly set
+	try:
+		data.index=pd.to_datetime(data.index,format="%m/%d/%Y %H:%M:%S %p")
+	except TypeError:
+		data.index=pd.to_datetime(data.index)
 	data.columns=["West","East"] # so as to shorten the legend
 	data["Total"]=data["West"]+data["East"]
 	return data
